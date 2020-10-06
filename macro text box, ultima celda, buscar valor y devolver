@@ -1,0 +1,84 @@
+Dim i, j, UltimaFila, tc, bandera, bandera2 As Integer
+Dim c As Range
+Dim firstAddress, abc, TecnicosCod As String
+
+Sub Test1()
+   
+     UltimaFila = Cells(Rows.Count, 1).End(xlUp).Row ' importante recorre hoja y regresa la ultima fila con datos
+     i = UltimaFila
+     
+     'UltimaColumna = Cells(1, Rows.Count).End(xlToRight).Column
+End Sub
+
+Sub buscar()
+    
+    Selection.Find(what:=abc, after:=ActiveCell, LookIn:=xlFormulas, MatchCase:=False).Select ' Busco en la columna seleccionada el valor de cbm y seleciono la celda donde esta
+    i = ActiveCell.Row 'doy el valor a line de la fila donde ha encontrado anteriormente el valor de cbm
+    MsgBox i
+    
+End Sub
+Private Sub cb_tecnicos_Change()
+
+    abc = cb_tecnicos.Text
+    i = 0
+    Sheets("Tecnicos").Range("B:B").Select ' Selecciona la columna donde buscar.
+    Call buscar
+    TecnicosCod = ActiveSheet.Cells(i, 1)
+    MsgBox " EL codigo de programador es:  " & TecnicosCod & " y su nombre es  " & ActiveSheet.Cells(i, 2)
+    
+End Sub
+
+Private Sub cb_tecnicos_MouseUp(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+    
+If bandera < 1 Then
+
+     Sheets("Tecnicos").Activate
+    Call Test1
+
+ For tc = 2 To i
+    cb_tecnicos.AddItem (Cells(tc, 2))
+    'MsgBox tc
+ Next
+bandera = bandera + 1
+
+End If
+
+End Sub
+
+Private Sub ComboBox1_MouseUp(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+If bandera2 < 1 Then
+
+     Sheets("Tipos").Activate
+    Call Test1
+
+ For tc = 2 To i
+    ComboBox1.AddItem (Cells(tc, 2))
+    'MsgBox tc
+ Next
+bandera2 = bandera2 + 1
+
+End If
+End Sub
+
+Private Sub UserForm_Initialize()
+
+  
+   'Workbooks("MiLibro.xls").Activate
+  '  Sheets("Sheet1").Select
+' MsgBox ActiveSheet.Cells.SpecialCells(xlCellTypeLastCell).Row
+' MsgBox ActiveSheet.UsedRange.SpecialCells(xlCellTypeLastCell).Row
+' i = ActiveSheet.UsedRange.SpecialCells(xlCellTypeLastCell).Row
+    'Sheets("Hoja2").Select
+    'Call Test1
+    'Selection.End(xlDown).Select
+    
+    
+    ThisWorkbook.Sheets("todo").Activate
+    Call Test1
+    i = i + 1
+
+txt_fecha.Value = Date
+txt_fecha.Locked = True
+  
+
+End Sub
